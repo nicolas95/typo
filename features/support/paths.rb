@@ -13,6 +13,12 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
+    when /^the admin dashboard page$/
+      '/admin'
+
+    when /^the new categories page$/
+      '/categories/new'
+
     when /^the home\s?page$/
       '/'
     when /^the new article page$/
