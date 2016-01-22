@@ -2,17 +2,15 @@ class CategoriesController < GroupingController
   # index - inherited
   # show - inherited
 
-
-  def edit; new_or_edit;  end
-
   def new
-    respond_to do |format|
-      format.html { new_or_edit }
-      format.js {
-        @category = Category.new
-      }
-    end
-  end
+    @category = Category.new
+    @categories = Category.all
+  end # new
+
+  def edit
+    @category = Category.find(params[:id])
+    @categories = Category.all
+  end # edit
 
   def update
     @category = Category.find(params[:id])
@@ -24,7 +22,7 @@ class CategoriesController < GroupingController
   end # update
 
   def create
-    @category = Category.new(params[:category])
+    @category = Category.new(params)
     if @category.save
       redirect_to root_path
     else
@@ -32,43 +30,4 @@ class CategoriesController < GroupingController
     end # if
 
   end # create
-
-  def destroy
-    @record = Category.find(params[:id])
-    return(render 'admin/shared/destroy') unless request.post?
-
-    @record.destroy
-    redirect_to :action => 'new'
-  end
-
-  private
-
-  def new_or_edit
-    @categories = Category.find(:all)
-    @category = Category.find(params[:id])
-    @category.attributes = params[:category]
-    if request.post?
-      respond_to do |format|
-        format.html { save_category }
-        format.js do
-          @category.save
-          @article = Article.new
-          @article.categories << @category
-          return render(:partial => 'admin/content/categories')
-        end
-      end
-      return
-    end
-    render 'new'
-  end
-
-  def save_category
-    if @category.save!
-      flash[:notice] = _('Category was successfully saved.')
-    else
-      flash[:error] = _('Category could not be saved.')
-    end
-    redirect_to :action => 'new'
-  end
-
 end # class CategoriesController
