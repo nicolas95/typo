@@ -112,8 +112,6 @@ Rails.application.routes.draw do
     match "/admin/#{i}(/:action(/:id))", :to => "admin/#{i}", :action => nil, :id => nil, :format => false
   end
 
-  match "/admin/categories/new" , :to => "admin/categories", :action => 'new'
-
   # default
   root :to  => 'articles#index', :format => false
 

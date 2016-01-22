@@ -23,7 +23,7 @@ class Admin::CategoriesController < Admin::BaseController
   end # update
 
   def create
-    @category = Category.new(params)
+    @category = Category.new(params[:category])
     if @category.save
       redirect_to root_path
     else
