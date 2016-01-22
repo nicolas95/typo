@@ -20,4 +20,14 @@ class CategoriesController < GroupingController
       render 'edit'
     end
   end # update
+
+  def create
+    @category = Category.new(params)
+    if @category.save
+      redirect_to root_path
+    else
+      render 'new'
+    end # if
+
+  end # create
 end # class CategoriesController
